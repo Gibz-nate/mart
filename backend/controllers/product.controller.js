@@ -16,15 +16,15 @@ export const createProduct = async (req, res) => {
 
 
     if(!product.name || !product.price || !product.image || !product.description)
-      return res.status(404).json({ Success:false, message:"Fill in all required fields"})  
+      return res.status(404).json({ success:false, message:"Fill in all required fields"})  
 
     const newProduct = new Product(product)
 
     try{
         await newProduct.save();
-        res.status(201).json({Success:true, message:"Product added successfully", data: newProduct})
+        res.status(201).json({success:true, message:"Product added successfully", data: newProduct})
     } catch(err){
-        res.status(500).json({Success:false, message:err.message})
+        res.status(500).json({success:false, message:err.message})
         console.error(err.message)
     }
 }
@@ -38,9 +38,9 @@ export const updateProduct = async (req, res) => {
     }
     try{
         const updatedProduct = await Product.findByIdAndUpdate(id, product, {new: true})
-        res.status(200).json({Success:true, message:"Product updated successfully", data: updatedProduct})
+        res.status(200).json({success:true, message:"Product updated successfully", data: updatedProduct})
     }catch(err){
-        res.status(500).json({Success:false, message: "server error", data: err.message})
+        res.status(500).json({success:false, message: "Unable to update", data: err.message})
     }
 }
 
@@ -52,9 +52,9 @@ export const deleteProduct = async (req, res) => {
     
     try{
         await Product.findByIdAndDelete(id);
-        res.status(200).json({Success:true, message:"Product deleted successfully"})
+        res.status(200).json({success:true, message:"Product deleted successfully"})
     } catch(err){
-        res.status(404).json({Success:false, message: "Product not found"})
+        res.status(404).json({success:false, message: "Product not found"})
         console.error(err.message)
     }
 
